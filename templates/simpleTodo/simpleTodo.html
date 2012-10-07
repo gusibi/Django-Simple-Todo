@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Simple Todo{% endblock %}</title>
+        <meta charset="UTF-8" />
+        <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+        <script src="/static/js/modernizr.js"></script>
+        <script src="/static/js/jquery.js"></script>
+        {% block extra_head %}
+            <style>
+                body {padding-top: 40px;}
+                .ftodo{text-decoration : line-through ; }
+                textarea{ width: 97%;
+                        padding: 5px;
+                        font-size: 14px;
+                        resize: vertical;}
+            </style>
+            <script type="text/javascript">
+            function sendtwitter(){
+                $('#myModal form').submit(function(){
+                    $.ajax({
+                        type: "POST",
+                        data: $('#myModal form').serialize(),
+                        url: "{% url add %}",
+                        cache: false,
+                        dataType: "html",
+                        success: function(html, textStatus) {
+                            $('#todo').replaceWith(html);
+                            $('#myModal').modal('hide');   
+                            $('#myModal form')[0].reset();                   
+                        },
+                        error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            $('#comment_form form').replaceWith('Your comment was unable to be posted at this time.  We apologise for the inconvenience.');
+                        }
+                    });
+                    return false;
+                });
+            }
+            $(document).ready(function(){
+                sendtwitter();
+            })
+        </script>     
+        {% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="span8 offset2">
+                    <div id="todo" class="well">
+                    {% block todo %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <td>
+                                    <h3 class="text-success">待办事项</h3>
+                                </td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for todo in todolist %}
+                            {% if todo.priority == '1' %}
+                            <tr class='error'>
+                            {% endif %}
+                            {% if todo.priority == '2' %}
+                            <tr class='warning'>
+                            {% endif %}
+                            {% if todo.priority == '3' %}
+                            <tr class='info'>
+                            {% endif %}
+                                <td class="todo">{{ todo.todo }}</td>
+                                <td class="te">
+                                    <div class="span2">
+                                        <a href="{% url finish todo.id %}" title="finish"><i class=" icon-ok"></i></a>
+                                        <a href="{% url update todo.id %}" title="edit"><i class="icon-edit"></i></a>
+                                        <a href="{% url delete todo.id %}" title="delete"><i class="icon-trash"></i></a>                          
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for ftodo in finishtodos %}
+                            <tr class='success'>
+                                <td class="ftodo muted">{{ ftodo.todo }}</td>
+                                <td class="te">
+                                    <div class="span2">
+                                        <a href="{% url backout ftodo.id %}" title="finish"><i class=" icon-repeat"></i></a>
+                                        <a href="{% url update ftodo.id %}" title="edit"><i class="icon-edit"></i></a>
+                                        <a href="{% url delete ftodo.id %}" title="delete"><i class="icon-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a class="btn btn-success" href="#myModal" role="button" data-toggle="modal">
+                        <i class="icon-plus icon-white"></i><span > ADD</span>
+                    </a>
+                    {% endblock %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+            <h3 id="myModalLabel">Add TODO</h3>
+        </div>
+        <form action="" method="post">{% csrf_token %}
+        <div class="modal-body">
+            <textarea name="todo" class="txtodo" id="txtodo" required="required">{{ todo.todo }}</textarea>
+            <fieldset>
+                <label class="radio inline" for="priority">
+                    <span class="label label-info">Priority</span>
+                </label>
+                <label class="radio inline" for="priority">
+                    <input type="radio" name="priority" value="1"/>
+                    <span class="label label-important">重要</span>
+                </label>          
+                <label class="radio inline" for="priority">
+                    <input type="radio" name="priority" value="2"/>
+                    <span class="label label-warning">警告</span>
+                </label>          
+                <label class="radio inline" for="priority">
+                    <input type="radio" name="priority" value="3"/>
+                    <span class="label label-success">成功</span>
+                </label>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button class="btn"  data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="send" class="btn btn-success" type="submit" name="submit" >Save changes</button>
+        </div>
+        </form>
+    </div>
+        <script src="/static/js/bootstrap.min.js"></script>
+    </body>
+</html>

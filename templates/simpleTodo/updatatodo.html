@@ -1,0 +1,32 @@
+{% extends 'simpleTodo.html'%}
+
+{% block title %} update Todo {% endblock %}
+
+{% block todo %}
+    <form action="{% url update todo.id %}" method="post">{% csrf_token %}
+        <div class="modal-body">
+            <textarea name="todo" class="txtodo" id="txtodo" required="required">{{ todo.todo }}</textarea>
+            <fieldset>
+                <label class="radio inline" for="priority">
+                    <span class="label label-info">Priority</span>
+                </label>
+                <label class="radio inline" for="priority">
+                    <input type="radio" name="priority" value="1" {% if todo.priority == '1' %} checked{% endif %}/>
+                    <span class="label label-important">重要</span>
+                </label>          
+                <label class="radio inline" for="priority">
+                    <input type="radio" name="priority" value="2" {% if todo.priority == '2' %} checked{% endif %}/>
+                    <span class="label label-warning">警告</span>
+                </label>          
+                <label class="radio inline" for="priority">
+                    <input type="radio" name="priority" value="3" {% if todo.priority == '3' %} checked{% endif %}/>
+                    <span class="label label-success">成功</span>
+                </label>
+            </fieldset>
+        </div>
+        <div class="modal-footer">
+            <button class="btn"  data-dismiss="modal" aria-hidden="true">Close</button>
+            <button id="send" class="btn btn-success" type="submit" name="submit" >Save changes</button>
+        </div>
+        </form>
+{% endblock %}

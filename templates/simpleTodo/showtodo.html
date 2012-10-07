@@ -1,0 +1,50 @@
+<div id="todo" class="well">
+{% block todo %}
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <td>
+                <h3 class="text-success">待办事项</h3>
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        {% for todo in todolist %}
+        {% if todo.priority == '1' %}
+        <tr class='error'>
+        {% endif %}
+        {% if todo.priority == '2' %}
+        <tr class='warning'>
+        {% endif %}
+        {% if todo.priority == '3' %}
+        <tr class='info'>
+        {% endif %}
+            <td class="todo">{{ todo.todo }}</td>
+            <td class="te">
+                <div class="span2">
+                    <a href="{% url finish todo.id %}" title="finish"><i class=" icon-ok"></i></a>
+                    <a href="{% url update todo.id %}" title="edit"><i class="icon-edit"></i></a>
+                    <a href="{% url delete todo.id %}" title="delete"><i class="icon-trash"></i></a>                          
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+        {% for ftodo in finishtodos %}
+        <tr class='success'>
+            <td class="ftodo muted">{{ ftodo.todo }}</td>
+            <td class="te">
+                <div class="span2">
+                    <a href="{% url backout ftodo.id %}" title="finish"><i class=" icon-repeat"></i></a>
+                    <a href="{% url update ftodo.id %}" title="edit"><i class="icon-edit"></i></a>
+                    <a href="{% url delete ftodo.id %}" title="delete"><i class="icon-trash"></i></a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a class="btn btn-success" href="#myModal" role="button" data-toggle="modal">
+    <i class="icon-plus icon-white"></i><span > ADD</span>
+</a>
+{% endblock %}
+</div>
