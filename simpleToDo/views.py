@@ -70,17 +70,16 @@ def addTodo(request):
 
 def updatetodo(request, id=''):
     if request.method == 'POST':
-        print 'ddd'
+        try:
+            todo = Todo.objects.get(id=id)
+        except Exception:
+            return HttpResponseRedirect('/simpleTodo/')
         atodo = request.POST['todo']
         priority = request.POST['priority']
-        user = User.objects.get(id='1')
-        todo = Todo(user=user, todo=atodo, priority=priority, flag='1')
+        todo.todo = atodo
+        todo.priority = priority
         todo.save()
-        todolist = Todo.objects.filter(flag='1')
-        finishtodos = Todo.objects.filter(flag=0)
-        return render_to_response('simpleTodo.html',
-            {'todolist': todolist, 'finishtodos': finishtodos},
-            context_instance=RequestContext(request))
+        return HttpResponseRedirect('/simpleTodo/')
     else:
         try:
             todo = Todo.objects.get(id=id)
