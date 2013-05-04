@@ -19,7 +19,7 @@ def todofinish(request, id=''):
     if todo.flag == '1':
         todo.flag = '0'
         todo.save()
-        return HttpResponseRedirect('/simpleTodo/')
+        return HttpResponseRedirect('/simpleToDo/')
     todolist = Todo.objects.filter(flag=1)
     return render_to_response('simpleTodo.html', {'todolist': todolist},
         context_instance=RequestContext(request))
@@ -30,7 +30,7 @@ def todoback(request, id=''):
     if todo.flag == '0':
         todo.flag = '1'
         todo.save()
-        return HttpResponseRedirect('/simpleTodo/')
+        return HttpResponseRedirect('/simpleToDo/')
     todolist = Todo.objects.filter(flag=1)
     return render_to_response('simpleTodo.html', {'todolist': todolist},
         context_instance=RequestContext(request))
@@ -43,7 +43,7 @@ def tododelete(request, id=''):
         raise Http404
     if todo:
         todo.delete()
-        return HttpResponseRedirect('/simpleTodo/')
+        return HttpResponseRedirect('/simpleToDo/')
     todolist = Todo.objects.filter(flag=1)
     return render_to_response('simpleTodo.html', {'todolist': todolist},
         context_instance=RequestContext(request))
@@ -73,13 +73,13 @@ def updatetodo(request, id=''):
         try:
             todo = Todo.objects.get(id=id)
         except Exception:
-            return HttpResponseRedirect('/simpleTodo/')
+            return HttpResponseRedirect('/simpleToDo/')
         atodo = request.POST['todo']
         priority = request.POST['priority']
         todo.todo = atodo
         todo.priority = priority
         todo.save()
-        return HttpResponseRedirect('/simpleTodo/')
+        return HttpResponseRedirect('/simpleToDo/')
     else:
         try:
             todo = Todo.objects.get(id=id)
