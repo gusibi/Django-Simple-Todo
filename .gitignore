@@ -1,4 +1,5 @@
 *.log
 *.pot
 *.pyc
+.gitignore
 local_settings.py

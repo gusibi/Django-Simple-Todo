@@ -21,7 +21,7 @@
                     $.ajax({
                         type: "POST",
                         data: $('#myModal form').serialize(),
-                        url: "{% url add %}",
+                        url: "{% url "add" %}",
                         cache: false,
                         dataType: "html",
                         success: function(html, textStatus) {
@@ -70,9 +70,9 @@
                                 <td class="todo">{{ todo.todo }}</td>
                                 <td class="te">
                                     <div class="span2">
-                                        <a href="{% url finish todo.id %}" title="finish"><i class=" icon-ok"></i></a>
-                                        <a href="{% url update todo.id %}" title="edit"><i class="icon-edit"></i></a>
-                                        <a href="{% url delete todo.id %}" title="delete"><i class="icon-trash"></i></a>                          
+                                        <a href="{% url "finish" todo.id %}" title="finish"><i class=" icon-ok"></i></a>
+                                        <a href="{% url "update" todo.id %}" title="edit"><i class="icon-edit"></i></a>
+                                        <a href="{% url "delete" todo.id %}" title="delete"><i class="icon-trash"></i></a>                          
                                     </div>
                                 </td>
                             </tr>
@@ -82,9 +82,9 @@
                                 <td class="ftodo muted">{{ ftodo.todo }}</td>
                                 <td class="te">
                                     <div class="span2">
-                                        <a href="{% url backout ftodo.id %}" title="redo"><i class=" icon-repeat"></i></a>
-                                        <a href="{% url update ftodo.id %}" title="edit"><i class="icon-edit"></i></a>
-                                        <a href="{% url delete ftodo.id %}" title="delete"><i class="icon-trash"></i></a>
+                                        <a href="{% url "backout" ftodo.id %}" title="redo"><i class=" icon-repeat"></i></a>
+                                        <a href="{% url "update" ftodo.id %}" title="edit"><i class="icon-edit"></i></a>
+                                        <a href="{% url "delete" ftodo.id %}" title="delete"><i class="icon-trash"></i></a>
                                     </div>
                                 </td>
                             </tr>

@@ -1,8 +1,10 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+# -*-coding: utf-8 -*-
+#!/usr/bin/env python
+from __future__ import unicode_literals
 
 from django.contrib import admin
-from simpleToDo.models import Todo
+from todo.models import Todo
+
 
 class TodoAdmin(admin.ModelAdmin):
     list_display = ('user', 'todo', 'priority', 'flag', 'pubtime')
@@ -10,4 +12,4 @@ class TodoAdmin(admin.ModelAdmin):
     ordering = ('-pubtime',)
 
 
-admin.site.register(Todo, TodoAdmin)  
+admin.site.register(Todo, TodoAdmin)

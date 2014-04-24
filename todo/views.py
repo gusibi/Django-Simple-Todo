@@ -1,9 +1,13 @@
+# -*-coding: utf-8 -*-
+#!/usr/bin/env python
+from __future__ import unicode_literals
+
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.template import RequestContext
-from django_openid_auth.models import User
+from django.contrib.auth.models import User
 from django.http import Http404
-from simpleToDo.models import Todo
+from models import Todo
 
 
 def todolist(request):
@@ -19,7 +23,7 @@ def todofinish(request, id=''):
     if todo.flag == '1':
         todo.flag = '0'
         todo.save()
-        return HttpResponseRedirect('/simpleToDo/')
+        return HttpResponseRedirect('/todos/')
     todolist = Todo.objects.filter(flag=1)
     return render_to_response('simpleTodo.html', {'todolist': todolist},
         context_instance=RequestContext(request))
@@ -30,7 +34,7 @@ def todoback(request, id=''):
     if todo.flag == '0':
         todo.flag = '1'
         todo.save()
-        return HttpResponseRedirect('/simpleToDo/')
+        return HttpResponseRedirect('/todos/')
     todolist = Todo.objects.filter(flag=1)
     return render_to_response('simpleTodo.html', {'todolist': todolist},
         context_instance=RequestContext(request))
@@ -43,7 +47,7 @@ def tododelete(request, id=''):
         raise Http404
     if todo:
         todo.delete()
-        return HttpResponseRedirect('/simpleToDo/')
+        return HttpResponseRedirect('/todos/')
     todolist = Todo.objects.filter(flag=1)
     return render_to_response('simpleTodo.html', {'todolist': todolist},
         context_instance=RequestContext(request))
@@ -73,13 +77,13 @@ def updatetodo(request, id=''):
         try:
             todo = Todo.objects.get(id=id)
         except Exception:
-            return HttpResponseRedirect('/simpleToDo/')
+            return HttpResponseRedirect('/todos/')
         atodo = request.POST['todo']
         priority = request.POST['priority']
         todo.todo = atodo
         todo.priority = priority
         todo.save()
-        return HttpResponseRedirect('/simpleToDo/')
+        return HttpResponseRedirect('/todos/')
     else:
         try:
             todo = Todo.objects.get(id=id)

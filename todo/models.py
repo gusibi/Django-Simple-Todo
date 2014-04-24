@@ -1,8 +1,9 @@
-#!/usr/bin/python
-# -*- coding: utf-8 -*-
+# -*-coding: utf-8 -*-
+#!/usr/bin/env python
+from __future__ import unicode_literals
 
 from django.db import models
-from django_openid_auth.models import User
+from django.contrib.auth.models import User
 
 
 class Todo(models.Model):
@@ -17,3 +18,5 @@ class Todo(models.Model):
 
     class Meta:
         ordering = ['priority', 'pubtime']
+
+# Create your models here.
