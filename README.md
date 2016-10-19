@@ -13,7 +13,8 @@ simple-todo dajngo版
 
 clone 下代码 只需执行下面的命令
 
-    python manage.py makemigrations
+    python manage.py makemigrations tood
     python manage.py migrate
+    python manage.py createsuperuser
 
 说明： http://www.cnblogs.com/cacique/archive/2012/10/06/2713415.html
