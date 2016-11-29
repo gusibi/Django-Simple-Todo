@@ -3,7 +3,7 @@ Django-Simple-Todo
 
 simple-todo dajngo版
 
-使用的环境： fedora 17 + django1.4 + python2.7 + sqlite3
+使用的环境： fedora 17 + django1.10 + python2.7 + sqlite3
 
 前端使用的 bootstrap + jquery
 
@@ -13,6 +13,8 @@ simple-todo dajngo版
 
 clone 下代码 只需执行下面的命令
 
-    python manage.py syncdb
+    python manage.py makemigrations todo
+    python manage.py migrate
+    python manage.py createsuperuser
 
 说明： http://www.cnblogs.com/cacique/archive/2012/10/06/2713415.html
